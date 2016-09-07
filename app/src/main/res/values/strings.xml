@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Ribot API Developer Challenge</string>
+    <string name="error_msg_ribot_connection_failed">Could not connect to Ribot HQ - no Ribots to be
+        found!
+    </string>
+    <string name="error_msg_generic">Something weird happened - try again a little later.</string>
+    <string name="error_msg_no_ribots_found">Oh no - no Ribots found!</string>
+</resources>
