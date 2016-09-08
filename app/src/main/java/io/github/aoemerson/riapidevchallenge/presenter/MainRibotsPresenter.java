@@ -23,10 +23,11 @@ public class MainRibotsPresenter implements RibotsPresenter, RibotsClient.Callba
 
     public MainRibotsPresenter(RibotsView ribotsView) {
         attachView(ribotsView);
+        this.ribotsClient = RibotsRetrofitClient.getInstance();
     }
 
     public MainRibotsPresenter() {
-
+        this.ribotsClient = RibotsRetrofitClient.getInstance();
     }
 
     @Override
