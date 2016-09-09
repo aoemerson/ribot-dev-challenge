@@ -1,14 +1,9 @@
-package io.github.aoemerson.riapidevchallenge.presenter;
+package io.github.aoemerson.riapidevchallenge.presenter.main;
 
-import junit.framework.Assert;
-
-import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
@@ -19,12 +14,16 @@ import aoemerson.github.io.riapidevchallenge.R;
 import io.github.aoemerson.riapidevchallenge.api.RibotsClient;
 import io.github.aoemerson.riapidevchallenge.model.Ribot;
 import io.github.aoemerson.riapidevchallenge.util.RibotTestFactory;
-import io.github.aoemerson.riapidevchallenge.view.RibotsView;
+import io.github.aoemerson.riapidevchallenge.view.main.OpenRibotDetailCommand;
+import io.github.aoemerson.riapidevchallenge.view.main.RibotsView;
 
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -82,8 +81,8 @@ public class MainRibotsPresenterTests {
     public void shouldUpdateViewOnRibotClicked() {
         MainRibotsPresenter presenter = new MainRibotsPresenter(ribotsView, ribotsClient);
         Ribot testRibot = RibotTestFactory.createRibot(0);
-        presenter.ribotClicked(testRibot);
-        verify(ribotsView, times(1)).showRibotDetail(eq(testRibot));
+        presenter.ribotClicked(1);
+        verify(ribotsView, times(1)).showRibotDetail(any(OpenRibotDetailCommand.class));
     }
 
     @Test

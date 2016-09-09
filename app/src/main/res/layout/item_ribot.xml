@@ -17,7 +17,9 @@
                                         android:layout_marginTop="10dp"
                                         android:background="@android:color/background_light"
                                         card_view:cardCornerRadius="2dp">
-        <RelativeLayout android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/layout_ribot_container"
+            android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="0dp">
             <ImageView

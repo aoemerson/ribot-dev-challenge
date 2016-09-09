@@ -1,4 +1,4 @@
-package io.github.aoemerson.riapidevchallenge.view;
+package io.github.aoemerson.riapidevchallenge.view.main;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +12,11 @@ import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.aoemerson.riapidevchallenge.model.Ribot;
-import io.github.aoemerson.riapidevchallenge.presenter.MainRibotsPresenter;
-import io.github.aoemerson.riapidevchallenge.presenter.RibotsPresenter;
+import io.github.aoemerson.riapidevchallenge.presenter.main.MainRibotsPresenter;
+import io.github.aoemerson.riapidevchallenge.presenter.main.RibotsPresenter;
+import io.github.aoemerson.riapidevchallenge.view.ActionCommand;
 
-public class MainRibotsActivity extends AppCompatActivity implements RibotsView {
+public class MainRibotsActivity extends AppCompatActivity implements RibotsView, RibotsAdapter.OnItemClickListener {
 
     @BindView(R.id.recyclerview_ribots_grid) RecyclerView ribotsGridView;
     @BindInt(R.integer.ribot_grid_columns) int ribotGridColumns;
@@ -28,7 +29,8 @@ public class MainRibotsActivity extends AppCompatActivity implements RibotsView 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_ribots);
         ButterKnife.bind(this);
-        ribotsAdapter = new RibotsAdapter();
+
+        ribotsAdapter = new RibotsAdapter(this);
         ribotsGridView.setAdapter(
                 ribotsAdapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, ribotGridColumns);
@@ -56,8 +58,8 @@ public class MainRibotsActivity extends AppCompatActivity implements RibotsView 
     }
 
     @Override
-    public void showRibotDetail(Ribot ribot) {
-
+    public void showRibotDetail(ActionCommand command) {
+        command.execute(this);
     }
 
     @Override
@@ -67,6 +69,10 @@ public class MainRibotsActivity extends AppCompatActivity implements RibotsView 
 
     @Override
     public void showError(int errorMsgResId) {
+    }
 
+    @Override
+    public void onRibotItemClicked(int itemPosition) {
+        presenter.ribotClicked(itemPosition);
     }
 }
