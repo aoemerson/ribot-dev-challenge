@@ -1,8 +1,11 @@
 package io.github.aoemerson.riapidevchallenge.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
-public class Profile {
+public class Profile implements Parcelable {
 
     public static class Builder {
 
@@ -53,6 +56,18 @@ public class Profile {
         }
 
     }
+
+    public static final Parcelable.Creator<Profile> CREATOR = new Parcelable.Creator<Profile>() {
+        @Override
+        public Profile createFromParcel(Parcel source) {
+            return new Profile(source);
+        }
+
+        @Override
+        public Profile[] newArray(int size) {
+            return new Profile[size];
+        }
+    };
     String id;
     String email;
     String avatar;
@@ -61,13 +76,26 @@ public class Profile {
     String bio;
     boolean isActive;
     Name name;
+
     public Profile() {
+    }
+
+
+    protected Profile(Parcel in) {
+        this.id = in.readString();
+        this.email = in.readString();
+        this.avatar = in.readString();
+        long tmpDateOfBirth = in.readLong();
+        this.dateOfBirth = tmpDateOfBirth == -1 ? null : new Date(tmpDateOfBirth);
+        this.hexColor = in.readString();
+        this.bio = in.readString();
+        this.isActive = in.readByte() != 0;
+        this.name = in.readParcelable(Name.class.getClassLoader());
     }
 
     public static Builder builder() {
         return new Builder();
     }
-
 
     public Date getDateOfBirth() {
         return dateOfBirth;
@@ -134,8 +162,6 @@ public class Profile {
         this.avatar = avatar;
     }
 
-
-
     public String getHexColor() {
         return hexColor;
     }
@@ -166,5 +192,22 @@ public class Profile {
 
     public void setName(Name name) {
         this.name = name;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.email);
+        dest.writeString(this.avatar);
+        dest.writeLong(this.dateOfBirth != null ? this.dateOfBirth.getTime() : -1);
+        dest.writeString(this.hexColor);
+        dest.writeString(this.bio);
+        dest.writeByte(this.isActive ? (byte) 1 : (byte) 0);
+        dest.writeParcelable(this.name, flags);
     }
 }
