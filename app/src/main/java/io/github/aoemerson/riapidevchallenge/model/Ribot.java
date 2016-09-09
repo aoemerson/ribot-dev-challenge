@@ -4,6 +4,10 @@ public class Ribot {
 
     Profile profile;
 
+    public Ribot() {
+
+    }
+
     public Ribot(Profile profile) {
         this.profile = profile;
     }

@@ -61,6 +61,8 @@ public class Profile {
     String bio;
     boolean isActive;
     Name name;
+    public Profile() {
+    }
 
     public static Builder builder() {
         return new Builder();
@@ -73,6 +75,19 @@ public class Profile {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
+        result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
+        result = 31 * result + (hexColor != null ? hexColor.hashCode() : 0);
+        result = 31 * result + (bio != null ? bio.hashCode() : 0);
+        result = 31 * result + (isActive ? 1 : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -93,19 +108,6 @@ public class Profile {
         if (bio != null ? !bio.equals(profile.bio) : profile.bio != null) return false;
         return name != null ? name.equals(profile.name) : profile.name == null;
 
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (avatar != null ? avatar.hashCode() : 0);
-        result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
-        result = 31 * result + (hexColor != null ? hexColor.hashCode() : 0);
-        result = 31 * result + (bio != null ? bio.hashCode() : 0);
-        result = 31 * result + (isActive ? 1 : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
     }
 
     public String getId() {

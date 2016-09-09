@@ -11,6 +11,9 @@ public class Name {
         this.last = last;
     }
 
+    public Name() {
+    }
+
     @Override
     public int hashCode() {
         int result = first != null ? first.hashCode() : 0;
