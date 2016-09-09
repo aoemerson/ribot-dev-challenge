@@ -1,39 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView android:id="@+id/card_view_ribot"
-                                    xmlns:android="http://schemas.android.com/apk/res/android"
-                                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                                    xmlns:tools="http://schemas.android.com/tools"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginBottom="10dp"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="10dp"
-                                    android:layout_marginTop="10dp"
-                                    android:background="@android:color/background_light"
-                                    card_view:cardCornerRadius="2dp"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                tools:layout_width="100dp"
 >
-    <RelativeLayout android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="5dp">
-        <ImageView
-            android:id="@+id/imageview_avatar"
-            android:layout_width="@dimen/ribot_grid_avatar_width"
-            android:layout_height="@dimen/ribot_grid_avatar_height"
-            android:background="@android:color/darker_gray"
-            android:src="@drawable/ic_face_black_48px"/>
+    <android.support.v7.widget.CardView android:id="@+id/card_view_ribot"
+                                        xmlns:android="http://schemas.android.com/apk/res/android"
+                                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                        xmlns:tools="http://schemas.android.com/tools"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginBottom="10dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_marginTop="10dp"
+                                        android:background="@android:color/background_light"
+                                        card_view:cardCornerRadius="2dp">
+        <RelativeLayout android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="0dp">
+            <ImageView
+                android:id="@+id/imageview_avatar"
+                android:layout_width="@dimen/ribot_grid_avatar_width"
+                android:layout_height="@dimen/ribot_grid_avatar_height"
+                android:background="@android:color/darker_gray"
+                android:src="@drawable/ic_face_black_48px"/>
 
 
-        <TextView
-            android:id="@+id/textview_ribot_name"
-            android:layout_width="@dimen/ribot_grid_avatar_width"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imageview_avatar"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:textColor="@android:color/black"
-            tools:text="Andrew"
+            <TextView
+                android:id="@+id/textview_ribot_name"
+                android:layout_width="@dimen/ribot_grid_avatar_width"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/imageview_avatar"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:textColor="@android:color/black"
+                tools:text="Andrew"
 
-        />
-    </RelativeLayout>
+            />
+            <View
+                android:id="@+id/view_ribot_color_separator"
+                android:layout_width="@dimen/ribot_grid_avatar_width"
+                android:layout_height="3dp"
+                android:layout_below="@id/textview_ribot_name"
+                android:background="@android:color/holo_blue_bright"
+            />
+        </RelativeLayout>
 
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

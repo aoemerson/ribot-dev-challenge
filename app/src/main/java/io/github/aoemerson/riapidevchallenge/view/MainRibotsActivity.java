@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import java.util.List;
 
 import aoemerson.github.io.riapidevchallenge.R;
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.aoemerson.riapidevchallenge.model.Ribot;
@@ -17,6 +18,8 @@ import io.github.aoemerson.riapidevchallenge.presenter.RibotsPresenter;
 public class MainRibotsActivity extends AppCompatActivity implements RibotsView {
 
     @BindView(R.id.recyclerview_ribots_grid) RecyclerView ribotsGridView;
+    @BindInt(R.integer.ribot_grid_columns) int ribotGridColumns;
+
     private RibotsAdapter ribotsAdapter;
     private RibotsPresenter presenter;
 
@@ -28,7 +31,9 @@ public class MainRibotsActivity extends AppCompatActivity implements RibotsView 
         ribotsAdapter = new RibotsAdapter();
         ribotsGridView.setAdapter(
                 ribotsAdapter);
-        ribotsGridView.setLayoutManager(new GridLayoutManager(this, 2));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, ribotGridColumns);
+        ribotsGridView.setHasFixedSize(true);
+        ribotsGridView.setLayoutManager(gridLayoutManager);
         presenter = new MainRibotsPresenter();
     }
 

@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="ribot_grid_avatar_width">100dp</dimen>
     <dimen name="ribot_grid_avatar_height">100dp</dimen>
+    <integer name="ribot_grid_columns">3</integer>
 </resources>

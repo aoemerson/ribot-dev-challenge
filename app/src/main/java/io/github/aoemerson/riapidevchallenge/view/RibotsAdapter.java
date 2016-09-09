@@ -1,5 +1,6 @@
 package io.github.aoemerson.riapidevchallenge.view;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ public class RibotsAdapter extends RecyclerView.Adapter<RibotsAdapter.RibotViewH
 
         @BindView(R.id.imageview_avatar) ImageView avatar;
         @BindView(R.id.textview_ribot_name) TextView name;
+        @BindView(R.id.view_ribot_color_separator) View separator;
 
         public RibotViewHolder(View itemView) {
             super(itemView);
@@ -51,6 +53,17 @@ public class RibotsAdapter extends RecyclerView.Adapter<RibotsAdapter.RibotViewH
     public void onBindViewHolder(RibotViewHolder holder, int position) {
         Ribot ribot = ribots.get(position);
         holder.name.setText(ribot.getProfile().getName().getFirst());
+
+        try {
+            int ribotColor = Color.parseColor(ribot.getProfile().getHexColor());
+            holder.avatar.setBackgroundColor(ribotColor);
+            holder.separator.setBackgroundColor(ribotColor);
+        } catch (IllegalArgumentException ignored) {
+            // Failure to parse colour ignored since we can keep default background colour
+            // TODO: Consider logging exception to analytics service like Crashlytics
+        }
+
+
         Picasso.with(holder.itemView.getContext())
                .load(ribot.getProfile().getAvatar())
                .placeholder(R.drawable.ic_face_black_48px)
