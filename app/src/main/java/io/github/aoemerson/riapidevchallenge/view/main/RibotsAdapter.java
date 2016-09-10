@@ -28,6 +28,7 @@ public class RibotsAdapter extends RecyclerView.Adapter<RibotsAdapter.RibotViewH
         @BindView(R.id.view_ribot_color_separator) View separator;
 
         private OnItemClickListener clickListener;
+        private int color;
 
         public RibotViewHolder(View itemView) {
             super(itemView);
@@ -48,19 +49,22 @@ public class RibotsAdapter extends RecyclerView.Adapter<RibotsAdapter.RibotViewH
         }
 
         private void loadAvatar(Ribot ribot) {
-            Picasso.with(itemView.getContext())
-                   .load(ribot.getProfile().getAvatar())
-                   .placeholder(R.drawable.ic_face_black_48px)
-                   .error(R.drawable.ic_face_black_48px)
-                   .into(avatar);
+            String avatarUrl = ribot.getProfile().getAvatar();
+            if (avatarUrl != null && avatarUrl.length() > 0) {
+                Picasso.with(itemView.getContext())
+                       .load(avatarUrl)
+                       .into(this.avatar);
+            } else {
+                avatar.setBackgroundColor(color);
+            }
         }
 
 
         private void setAccentColor(Ribot ribot) {
             try {
-                int ribotColor = Color.parseColor(ribot.getProfile().getHexColor());
-                avatar.setBackgroundColor(ribotColor);
-                separator.setBackgroundColor(ribotColor);
+                color = Color.parseColor(ribot.getProfile().getHexColor());
+//                avatar.setBackgroundColor(ribotColor);
+                separator.setBackgroundColor(color);
             } catch (IllegalArgumentException ignored) {
                 // Failure to parse colour ignored since we can keep default background colour
                 // TODO: Consider logging exception to analytics service like Crashlytics
@@ -91,6 +95,7 @@ public class RibotsAdapter extends RecyclerView.Adapter<RibotsAdapter.RibotViewH
 
     public void setRibots(List<Ribot> ribots) {
         this.ribots = ribots;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -110,4 +115,6 @@ public class RibotsAdapter extends RecyclerView.Adapter<RibotsAdapter.RibotViewH
     public int getItemCount() {
         return ribots.size();
     }
+
+
 }

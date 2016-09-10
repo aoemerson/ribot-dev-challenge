@@ -4,5 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="ribot_grid_avatar_width">100dp</dimen>
     <dimen name="ribot_grid_avatar_height">100dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="toolbar_expanded_height">220dp</dimen>
     <integer name="ribot_grid_columns">3</integer>
 </resources>

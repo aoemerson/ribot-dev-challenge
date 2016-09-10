@@ -1,12 +1,11 @@
 package io.github.aoemerson.riapidevchallenge.presenter.main;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import aoemerson.github.io.riapidevchallenge.R;
 import io.github.aoemerson.riapidevchallenge.api.RibotsClient;
-import io.github.aoemerson.riapidevchallenge.api.RibotsOfflineClient;
+import io.github.aoemerson.riapidevchallenge.api.RibotsRetrofitClient;
 import io.github.aoemerson.riapidevchallenge.model.Ribot;
 import io.github.aoemerson.riapidevchallenge.view.main.OpenRibotDetailCommand;
 import io.github.aoemerson.riapidevchallenge.view.main.RibotsView;
@@ -36,19 +35,19 @@ public class MainRibotsPresenter implements RibotsPresenter, RibotsClient.Callba
 
     public MainRibotsPresenter(RibotsView ribotsView) {
         attachView(ribotsView);
-        //   TODO: reinstate     this.ribotsClient = RibotsRetrofitClient.getInstance();
-        this.ribotsClient = RibotsOfflineClient.getInstance();
+        this.ribotsClient = RibotsRetrofitClient.getInstance();
+//        this.ribotsClient = RibotsOfflineClient.getInstance();
     }
 
     public MainRibotsPresenter() {
-//   TODO: reinstate     this.ribotsClient = RibotsRetrofitClient.getInstance();
-        this.ribotsClient = RibotsOfflineClient.getInstance();
+        this.ribotsClient = RibotsRetrofitClient.getInstance();
+//        this.ribotsClient = RibotsOfflineClient.getInstance();
     }
 
     @Override
     public void ribotClicked(int ribotPosition) {
-        OpenRibotDetailCommand detailCommand = new OpenRibotDetailCommand(
-                ((ArrayList<Ribot>) ribots), ribotPosition);
+        OpenRibotDetailCommand detailCommand = new OpenRibotDetailCommand(ribots
+                .get(ribotPosition), ribotPosition);
         ribotsView.showRibotDetail(detailCommand);
     }
 

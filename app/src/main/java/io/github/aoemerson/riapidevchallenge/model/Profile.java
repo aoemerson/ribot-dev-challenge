@@ -3,6 +3,8 @@ package io.github.aoemerson.riapidevchallenge.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 
 public class Profile implements Parcelable {
@@ -74,6 +76,7 @@ public class Profile implements Parcelable {
     Date dateOfBirth;
     String hexColor;
     String bio;
+    @JsonProperty("isActive")
     boolean isActive;
     Name name;
 

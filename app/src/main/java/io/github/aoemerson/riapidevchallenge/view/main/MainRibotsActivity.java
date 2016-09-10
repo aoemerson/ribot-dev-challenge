@@ -1,9 +1,15 @@
 package io.github.aoemerson.riapidevchallenge.view.main;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Fade;
+import android.transition.Transition;
+import android.view.View;
 
 import java.util.List;
 
@@ -23,6 +29,7 @@ public class MainRibotsActivity extends AppCompatActivity implements RibotsView,
 
     private RibotsAdapter ribotsAdapter;
     private RibotsPresenter presenter;
+    private GridLayoutManager gridLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +37,19 @@ public class MainRibotsActivity extends AppCompatActivity implements RibotsView,
         setContentView(R.layout.activity_main_ribots);
         ButterKnife.bind(this);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Transition fade = new Fade();
+//            fade.excludeTarget(android.R.id.statusBarBackground, true);
+            fade.excludeTarget(android.R.id.navigationBarBackground, true);
+            getWindow().setExitTransition(fade);
+
+            getWindow().setEnterTransition(fade);
+        }
+
         ribotsAdapter = new RibotsAdapter(this);
         ribotsGridView.setAdapter(
                 ribotsAdapter);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, ribotGridColumns);
+        gridLayoutManager = new GridLayoutManager(this, ribotGridColumns);
         ribotsGridView.setHasFixedSize(true);
         ribotsGridView.setLayoutManager(gridLayoutManager);
         presenter = new MainRibotsPresenter();
@@ -59,7 +75,22 @@ public class MainRibotsActivity extends AppCompatActivity implements RibotsView,
 
     @Override
     public void showRibotDetail(ActionCommand command) {
-        command.execute(this);
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd-hh-mm-ss", Locale.US);
+//        File dir = Environment.getExternalStorageDirectory();
+//
+//        Debug.startMethodTracing(String.format("%s/trace", dir.toString()));
+//        command.execute(this);
+        Intent intent = command.getIntent(this);
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            View ribotItemView = gridLayoutManager.findViewByPosition(command.getDataPosition());
+            View avatar = ribotItemView.findViewById(R.id.imageview_avatar);
+            ActivityOptions activityOptions = ActivityOptions
+                    .makeSceneTransitionAnimation(this, avatar, "avatar_transition");
+            startActivity(intent, activityOptions.toBundle());
+        } else {
+            startActivity(intent);
+        }
     }
 
     @Override

@@ -26,9 +26,9 @@
                 android:id="@+id/imageview_avatar"
                 android:layout_width="@dimen/ribot_grid_avatar_width"
                 android:layout_height="@dimen/ribot_grid_avatar_height"
-                android:background="@android:color/darker_gray"
-                android:src="@drawable/ic_face_black_48px"/>
 
+                android:src="@drawable/ic_person_100px"/>
+            <!--android:background="@android:color/darker_gray"-->
 
             <TextView
                 android:id="@+id/textview_ribot_name"
@@ -39,6 +39,7 @@
                 android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:textColor="@android:color/black"
+                android:transitionName="avatar_transition"
                 tools:text="Andrew"
 
             />

@@ -1,35 +1,48 @@
 package io.github.aoemerson.riapidevchallenge.view.main;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-
-import java.util.ArrayList;
 
 import io.github.aoemerson.riapidevchallenge.model.Ribot;
 import io.github.aoemerson.riapidevchallenge.view.ActionCommand;
+import io.github.aoemerson.riapidevchallenge.view.detail.RibotProfileActivity;
 
-/**
- * Created by Andrew on 09/09/2016.
- */
+
 public class OpenRibotDetailCommand implements ActionCommand {
 
-    private final ArrayList<Ribot> ribots;
-    private final int index;
 
-    public OpenRibotDetailCommand(ArrayList<Ribot> ribots, int index) {
-        this.ribots = ribots;
-        this.index = index;
+    private final Ribot ribot;
+    private int ribotIndex;
+
+    public OpenRibotDetailCommand(Ribot ribot) {
+        this.ribot = ribot;
+    }
+
+    public OpenRibotDetailCommand(Ribot ribot, int ribotIndex) {
+        this.ribot = ribot;
+        this.ribotIndex = ribotIndex;
     }
 
     @Override
-    public void execute(Context context) {
-        Intent intent = new Intent(context, ActivityCompat.class);
-        Bundle extras = new Bundle();
-        extras.putParcelableArrayList("", ribots);
-        intent.putExtras(extras);
-        context.startActivity(intent);
+    public void execute(Activity activity) {
+
+        activity.startActivity(getIntent(activity));
     }
+
+    @Override
+    public Intent getIntent(Activity activity) {
+        Intent intent = new Intent(activity, RibotProfileActivity.class);
+        Bundle extras = new Bundle();
+        extras.putParcelable(RibotProfileActivity.EXTRA_RIBOT, ribot);
+        intent.putExtras(extras);
+        return intent;
+    }
+
+    @Override
+    public int getDataPosition() {
+        return ribotIndex;
+    }
+
 
 }
