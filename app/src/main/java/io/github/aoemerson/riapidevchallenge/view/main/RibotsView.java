@@ -12,4 +12,5 @@ public interface RibotsView extends BaseView {
     void showRibots(List<Ribot> ribots);
 
     void showRibotDetail(ActionCommand action);
+
 }

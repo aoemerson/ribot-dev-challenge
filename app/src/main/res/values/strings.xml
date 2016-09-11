@@ -7,7 +7,6 @@
     <string name="error_msg_no_ribots_found">Oh no - no Ribots found!</string>
     <string name="ribots_tabs_page_title">Title</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_ribots_detail">Details</string>
+    <string name="mainAppTitle">Meet the Ribots!</string>
 </resources>

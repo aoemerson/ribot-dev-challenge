@@ -44,7 +44,7 @@ public class RibotProfileActivity extends AppCompatActivity implements RibotProf
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_paralax_ribot_detail);
+        setContentView(R.layout.activity_ribot_profile);
         ButterKnife.bind(this);
 
         collapsingToolbar.setTitleEnabled(savedInstanceState != null);

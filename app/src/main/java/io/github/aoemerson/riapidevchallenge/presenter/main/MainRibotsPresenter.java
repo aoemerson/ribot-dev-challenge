@@ -1,5 +1,8 @@
 package io.github.aoemerson.riapidevchallenge.presenter.main;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -11,12 +14,23 @@ import io.github.aoemerson.riapidevchallenge.view.main.OpenRibotDetailCommand;
 import io.github.aoemerson.riapidevchallenge.view.main.RibotsView;
 
 
-public class MainRibotsPresenter implements RibotsPresenter, RibotsClient.Callback {
+public class MainRibotsPresenter implements RibotsPresenter, RibotsClient.Callback, Parcelable {
+
+    public static final Parcelable.Creator<MainRibotsPresenter> CREATOR = new Parcelable.Creator<MainRibotsPresenter>() {
+        @Override
+        public MainRibotsPresenter createFromParcel(Parcel source) {
+            return new MainRibotsPresenter(source);
+        }
+
+        @Override
+        public MainRibotsPresenter[] newArray(int size) {
+            return new MainRibotsPresenter[size];
+        }
+    };
 
     RibotsView ribotsView;
     RibotsClient ribotsClient;
     private List<Ribot> ribots;
-
 
     MainRibotsPresenter(RibotsView ribotsView, RibotsClient ribotsClient) {
         attachView(ribotsView);
@@ -36,12 +50,14 @@ public class MainRibotsPresenter implements RibotsPresenter, RibotsClient.Callba
     public MainRibotsPresenter(RibotsView ribotsView) {
         attachView(ribotsView);
         this.ribotsClient = RibotsRetrofitClient.getInstance();
-//        this.ribotsClient = RibotsOfflineClient.getInstance();
     }
 
     public MainRibotsPresenter() {
         this.ribotsClient = RibotsRetrofitClient.getInstance();
-//        this.ribotsClient = RibotsOfflineClient.getInstance();
+    }
+
+    protected MainRibotsPresenter(Parcel in) {
+        this.ribots = in.createTypedArrayList(Ribot.CREATOR);
     }
 
     @Override
@@ -53,8 +69,18 @@ public class MainRibotsPresenter implements RibotsPresenter, RibotsClient.Callba
 
     @Override
     public void requestRibots() {
-        ribotsView.showLoading(true);
-        ribotsClient.getRibots(this);
+
+        if (ribots == null || ribots.size() == 0) {
+            ribotsView.showLoading(true);
+            ribotsClient.getRibots(this);
+        } else {
+            ribotsView.showRibots(ribots);
+        }
+    }
+
+    @Override
+    public void restore() {
+        this.ribotsClient = RibotsRetrofitClient.getInstance();
     }
 
     @Override
@@ -78,5 +104,15 @@ public class MainRibotsPresenter implements RibotsPresenter, RibotsClient.Callba
             ribotsView.showError(R.string.error_msg_generic);
         }
 
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeTypedList(this.ribots);
     }
 }

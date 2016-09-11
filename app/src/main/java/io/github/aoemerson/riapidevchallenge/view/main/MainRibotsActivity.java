@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.transition.Fade;
 import android.transition.Transition;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -24,36 +26,56 @@ import io.github.aoemerson.riapidevchallenge.view.ActionCommand;
 
 public class MainRibotsActivity extends AppCompatActivity implements RibotsView, RibotsAdapter.OnItemClickListener {
 
+    private static final String OUT_STATE_PRESENTER = "OUT_STATE_PRESENTER";
     @BindView(R.id.recyclerview_ribots_grid) RecyclerView ribotsGridView;
     @BindInt(R.integer.ribot_grid_columns) int ribotGridColumns;
+    @BindView(R.id.progressBar) ProgressBar progressBar;
 
     private RibotsAdapter ribotsAdapter;
     private RibotsPresenter presenter;
     private GridLayoutManager gridLayoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_ribots);
         ButterKnife.bind(this);
+        configureTransitions();
 
+        ribotsAdapter = new RibotsAdapter(this);
+        ribotsGridView.setAdapter(ribotsAdapter);
+        gridLayoutManager = new GridLayoutManager(this, ribotGridColumns);
+        ribotsGridView.setHasFixedSize(true);
+        ribotsGridView.setLayoutManager(gridLayoutManager);
+        initPresenter(savedInstanceState);
+    }
+
+    private void configureTransitions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Transition fade = new Fade();
-//            fade.excludeTarget(android.R.id.statusBarBackground, true);
             fade.excludeTarget(android.R.id.navigationBarBackground, true);
             getWindow().setExitTransition(fade);
 
             getWindow().setEnterTransition(fade);
         }
-
-        ribotsAdapter = new RibotsAdapter(this);
-        ribotsGridView.setAdapter(
-                ribotsAdapter);
-        gridLayoutManager = new GridLayoutManager(this, ribotGridColumns);
-        ribotsGridView.setHasFixedSize(true);
-        ribotsGridView.setLayoutManager(gridLayoutManager);
-        presenter = new MainRibotsPresenter();
     }
+
+    private void initPresenter(Bundle savedInstanceState) {
+        if (savedInstanceState != null && savedInstanceState.containsKey(OUT_STATE_PRESENTER)) {
+            presenter = savedInstanceState.getParcelable(OUT_STATE_PRESENTER);
+            presenter.restore();
+        } else {
+            presenter = new MainRibotsPresenter();
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(OUT_STATE_PRESENTER, ((MainRibotsPresenter) presenter));
+    }
+
 
     @Override
     protected void onPause() {
@@ -75,11 +97,6 @@ public class MainRibotsActivity extends AppCompatActivity implements RibotsView,
 
     @Override
     public void showRibotDetail(ActionCommand command) {
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd-hh-mm-ss", Locale.US);
-//        File dir = Environment.getExternalStorageDirectory();
-//
-//        Debug.startMethodTracing(String.format("%s/trace", dir.toString()));
-//        command.execute(this);
         Intent intent = command.getIntent(this);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
@@ -95,11 +112,13 @@ public class MainRibotsActivity extends AppCompatActivity implements RibotsView,
 
     @Override
     public void showLoading(boolean loading) {
-
+        progressBar.setVisibility(loading ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void showError(int errorMsgResId) {
+        Toast.makeText(MainRibotsActivity.this, getString(errorMsgResId), Toast.LENGTH_SHORT)
+             .show();
     }
 
     @Override

@@ -10,4 +10,6 @@ public interface RibotsPresenter extends BasePresenter<RibotsView> {
 
     void requestRibots();
 
+    void restore();
+
 }
