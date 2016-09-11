@@ -24,4 +24,6 @@ public interface RibotProfileView extends BaseView {
     void setAccentColor(String hexColor);
 
     void detailFinalised();
+
+    void sendEmail(String email);
 }

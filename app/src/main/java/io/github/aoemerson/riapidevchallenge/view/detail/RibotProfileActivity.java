@@ -1,8 +1,10 @@
 package io.github.aoemerson.riapidevchallenge.view.detail;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -12,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Fade;
 import android.transition.Transition;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -20,6 +23,7 @@ import com.squareup.picasso.Picasso;
 import aoemerson.github.io.riapidevchallenge.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.github.aoemerson.riapidevchallenge.model.Ribot;
 import io.github.aoemerson.riapidevchallenge.presenter.detail.MainRibotProfilePresenter;
 import io.github.aoemerson.riapidevchallenge.presenter.detail.RibotProfilePresenter;
@@ -33,6 +37,7 @@ public class RibotProfileActivity extends AppCompatActivity implements RibotProf
     @BindView(R.id.fab) FloatingActionButton fab;
     @BindView(R.id.collapsing_toolbar) CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.toolbar) Toolbar toolbar;
+
     RibotPropertyView lastAddedPropertyView;
     private RibotProfilePresenter presenter;
 
@@ -77,6 +82,16 @@ public class RibotProfileActivity extends AppCompatActivity implements RibotProf
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onBackPressed() {
         collapsingToolbar.setTitleEnabled(false);
         super.onBackPressed();
@@ -87,6 +102,11 @@ public class RibotProfileActivity extends AppCompatActivity implements RibotProf
     protected void onResume() {
         super.onResume();
 
+    }
+
+    @OnClick(R.id.fab)
+    public void onFabClicked() {
+        presenter.onEmailButtonClicked();
     }
 
     @Override
@@ -171,6 +191,13 @@ public class RibotProfileActivity extends AppCompatActivity implements RibotProf
     @Override
     public void detailFinalised() {
         lastAddedPropertyView.setSeparatorVisibility(false);
+    }
+
+    @Override
+    public void sendEmail(String email) {
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse(String.format("mailto:%s", email)));
+        startActivity(emailIntent);
     }
 
     @Override

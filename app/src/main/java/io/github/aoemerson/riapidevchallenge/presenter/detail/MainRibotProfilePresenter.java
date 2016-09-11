@@ -13,12 +13,12 @@ import io.github.aoemerson.riapidevchallenge.view.detail.RibotProfileView;
 
 public class MainRibotProfilePresenter implements RibotProfilePresenter {
 
-    private RibotProfileView ribotIndividualFragment;
+    private RibotProfileView ribotProfileView;
     private Ribot ribot;
 
     @Override
     public void requestData() {
-        ribot = ribotIndividualFragment.getRibotArgument();
+        ribot = ribotProfileView.getRibotArgument();
         if (ribot != null) {
             Profile profile = ribot.getProfile();
             if (profile != null) {
@@ -27,8 +27,8 @@ public class MainRibotProfilePresenter implements RibotProfilePresenter {
                 setDob(profile);
                 setEmail(profile);
                 setBio(profile);
-                ribotIndividualFragment.setAccentColor(profile.getHexColor());
-                ribotIndividualFragment.detailFinalised();
+                ribotProfileView.setAccentColor(profile.getHexColor());
+                ribotProfileView.detailFinalised();
             }
         } else {
 //       TODO: handle this error
@@ -36,27 +36,32 @@ public class MainRibotProfilePresenter implements RibotProfilePresenter {
 
     }
 
+    @Override
+    public void onEmailButtonClicked() {
+        ribotProfileView.sendEmail(ribot.getProfile().getEmail());
+    }
+
     private void setAvatar(Profile profile) {
         String avatar = profile.getAvatar();
         if (avatar != null && avatar.length() > 0)
-            ribotIndividualFragment.setAvatar(avatar);
+            ribotProfileView.setAvatar(avatar);
         else {
 
         }
-//            ribotIndividualFragment.
+//            ribotProfileView.
     }
 
     private void setBio(Profile profile) {
         String bio = profile.getBio();
         if (validField(bio)) {
-            ribotIndividualFragment.setBio(bio);
+            ribotProfileView.setBio(bio);
         }
     }
 
     private void setEmail(@NonNull Profile profile) {
         String email = profile.getEmail();
         if (validField(email)) {
-            ribotIndividualFragment.setEmail(email);
+            ribotProfileView.setEmail(email);
         }
 
     }
@@ -66,14 +71,14 @@ public class MainRibotProfilePresenter implements RibotProfilePresenter {
         if (dob != null) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
             String dobString = sdf.format(dob);
-            ribotIndividualFragment.setDateOfBirth(dobString);
+            ribotProfileView.setDateOfBirth(dobString);
         }
     }
 
     private void setName(@NonNull Profile profile) {
         Name name = profile.getName();
         if (name != null && validField(name.getFirst())) {
-            ribotIndividualFragment.setName(String
+            ribotProfileView.setName(String
                     .format("%s %s", name.getFirst(), name.getLast()));
         }
     }
@@ -84,11 +89,11 @@ public class MainRibotProfilePresenter implements RibotProfilePresenter {
 
     @Override
     public void attachView(RibotProfileView view) {
-        ribotIndividualFragment = view;
+        ribotProfileView = view;
     }
 
     @Override
     public void detachView() {
-        ribotIndividualFragment = null;
+        ribotProfileView = null;
     }
 }

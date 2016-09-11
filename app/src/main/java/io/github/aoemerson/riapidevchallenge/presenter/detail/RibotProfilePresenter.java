@@ -7,4 +7,6 @@ public interface RibotProfilePresenter extends BasePresenter<RibotProfileView> {
 
     void requestData();
 
+    void onEmailButtonClicked();
+
 }
