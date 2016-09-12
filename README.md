@@ -11,7 +11,7 @@
 ## Build Instructions
 
 * Simply hit build / run / debug in android studio
-* There are two product flavors included as a result of working without the live API for a while. Select the `onlineApi` flavor in the Build Variants window in Android Studio before building / running.
+* There are two product flavors included as a result of working without the live API for a while. Select the `onlineApiDebug` flavor in the Build Variants window in Android Studio before building / running.
 * You can run the unit tests in the test directory with a right-click and 'Run' - I haven't included the tests in the build / run scripts
 
 ## Overview of the app
