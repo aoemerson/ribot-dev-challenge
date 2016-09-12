@@ -4,7 +4,7 @@
 
 * Android Studio with gradle version 2.1.3
 * Android SDK build tools version 24.0.2
-* Android SDK v24 (Nougat) [but it should compile with API23 if you don't already have 24 ready]
+* Android SDK v24 (Nougat) [but it should compile with API23 if you don't already have 24 on your machine]
 * All other dependencies (libraries, etc) are listed in the app's `build.gradle` files
 * Min SDK for running set at API 17
 
