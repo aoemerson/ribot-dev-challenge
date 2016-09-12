@@ -55,7 +55,7 @@ public class MainRibotsPresenterTests {
 
         List<Ribot> testRibots = RibotTestFactory.createTestRibots(10);
         presenter.onRibotsLoaded(testRibots);
-        verify(ribotsView,times(1)).showLoading(eq(false));
+        verify(ribotsView, times(1)).showLoading(eq(false));
         verify(ribotsView, times(1)).showRibots(eq(testRibots));
     }
 
@@ -64,7 +64,7 @@ public class MainRibotsPresenterTests {
         MainRibotsPresenter presenter = new MainRibotsPresenter(ribotsView, ribotsClient);
         Exception testException = new Exception();
         presenter.onRibotsLoadError(testException);
-        verify(ribotsView,times(1)).showLoading(eq(false));
+        verify(ribotsView, times(1)).showLoading(eq(false));
         verify(ribotsView, times(1)).showError(eq(R.string.error_msg_generic));
     }
 
@@ -73,14 +73,14 @@ public class MainRibotsPresenterTests {
         MainRibotsPresenter presenter = new MainRibotsPresenter(ribotsView, ribotsClient);
         Exception testException = new IOException("Failed to connect to Ribot API");
         presenter.onRibotsLoadError(testException);
-        verify(ribotsView,times(1)).showLoading(eq(false));
+        verify(ribotsView, times(1)).showLoading(eq(false));
         verify(ribotsView, times(1)).showError(eq(R.string.error_msg_ribot_connection_failed));
     }
 
     @Test
     public void shouldUpdateViewOnRibotClicked() {
         MainRibotsPresenter presenter = new MainRibotsPresenter(ribotsView, ribotsClient);
-        Ribot testRibot = RibotTestFactory.createRibot(0);
+        presenter.ribots = RibotTestFactory.createTestRibots(5); // Inject for test purposes
         presenter.ribotClicked(1);
         verify(ribotsView, times(1)).showRibotDetail(any(OpenRibotDetailCommand.class));
     }

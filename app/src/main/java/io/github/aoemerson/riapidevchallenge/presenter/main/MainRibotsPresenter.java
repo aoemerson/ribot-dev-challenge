@@ -30,7 +30,7 @@ public class MainRibotsPresenter implements RibotsPresenter, RibotsClient.Callba
 
     RibotsView ribotsView;
     RibotsClient ribotsClient;
-    private List<Ribot> ribots;
+    List<Ribot> ribots;
 
     MainRibotsPresenter(RibotsView ribotsView, RibotsClient ribotsClient) {
         attachView(ribotsView);
