@@ -38,6 +38,7 @@ Each screen is implemented using a Model-View-Presenter architecture to separate
   * I would like to add more involved Mockito object mocks rather than just verifying that certain methods are called in response to an input.
 * Offline mode: At the moment the app needs a connection to get the Ribots. I would add a cache that maintains the most recent response from the API and displays the same information when offline (with a heads up to the user). It could be as simple as storing the JSON as a file and reading it in or by using a more structured format such as an SQLite DB.
 * Make the Profile screen more interactive e.g. allow them to click on each property and have the app do something sensible - e.g. add a birthday reminder to your calendar, copy-paste a field.
-* For maintainability and testing flexibility, I would like to make use of Dependency Injection (e.g. Dagger) but I'm still quite new to that library so didn't feel comfortable using it here this time.
+* For maintainability and testing flexibility, I would like to make use of Dependency Injection (e.g. Dagger) but I'm still quite new to that library so didn't feel comfortable using it here this time (Edit: I am familiar with this now - see [this repo](https://github.com/aoemerson/crimes-app))
 * Design: The Ribots list screen is a bit sparse and could do with some kind of introduction for the user.
+
 
